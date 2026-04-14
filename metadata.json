@@ -1,0 +1,6 @@
+{
+  "name": "Sistema E-Contratado GRUPORB",
+  "description": "ERP multimódulo para gestão de fornecedores, projetos e contratos com automação via IA Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

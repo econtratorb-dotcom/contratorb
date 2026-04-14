@@ -1,0 +1,57 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    // Collection: fornecedores, projetos, unidades, categorias, contratos, configuracoes
+    // All documents have a 'user_id' field (string)
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isDocOwner() {
+      return isAuthenticated() && request.auth.uid == resource.data.user_id;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == "fernando.campos.gruporb@gmail.com" ||
+        request.auth.token.email == "fecampos120@gmail.com" ||
+        request.auth.token.email == "econtratorb@gmail.com" ||
+        request.auth.uid == "9eKuuQvm28V6b2H7DD23JDQLbLG2" ||
+        request.auth.uid == "tr9ByomJudglNm2jFQGuKaKmc1l2"
+      );
+    }
+
+    function isValidData(data) {
+      return data.user_id is string && data.user_id == request.auth.uid;
+    }
+
+    // Rules for configuracoes (docId is uid)
+    match /configuracoes/{userId} {
+      allow read, write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+    }
+
+    // Rules for all other collections
+    match /{collectionName}/{docId} {
+      allow read: if isAdmin() || (isAuthenticated() && (
+        (resource == null) || (resource.data.user_id == request.auth.uid)
+      ));
+      allow create: if isAdmin() || (isAuthenticated() && (
+        request.resource.data.user_id == request.auth.uid
+      ));
+      allow update, delete: if isAdmin() || (isAuthenticated() && (
+        resource.data.user_id == request.auth.uid
+      ));
+    }
+  }
+}

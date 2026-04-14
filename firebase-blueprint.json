@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "fornecedor": {
+      "title": "Fornecedor",
+      "description": "Cadastro de fornecedores e parceiros",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "nome": { "type": "string" },
+        "cnpj": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "status": { "type": "string", "enum": ["Pendente", "Homologado", "Reprovado"] },
+        "categoria_id": { "type": "string" },
+        "riscos": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "nome", "status"]
+    },
+    "projeto": {
+      "title": "Projeto",
+      "description": "Gestão de obras e serviços",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "nome": { "type": "string" },
+        "unidade_id": { "type": "string" },
+        "nrs": { "type": "array", "items": { "type": "string" } },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "nome", "unidade_id"]
+    },
+    "unidade": {
+      "title": "Unidade",
+      "description": "Unidades de negócio/filiais",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "nome": { "type": "string" },
+        "cnpj": { "type": "string" },
+        "endereco": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "nome"]
+    },
+    "categoria": {
+      "title": "Categoria",
+      "description": "Categorias de serviço",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "nome": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "nome"]
+    },
+    "contrato": {
+      "title": "Contrato",
+      "description": "Contratos gerados pelo sistema",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "fornecedor_id": { "type": "string" },
+        "projeto_id": { "type": "string" },
+        "valor": { "type": "number" },
+        "prazo": { "type": "string" },
+        "clausulas": { "type": "array", "items": { "type": "string" } },
+        "pdf_url": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "fornecedor_id", "projeto_id"]
+    },
+    "configuracao": {
+      "title": "Configuração",
+      "description": "Configurações globais do sistema",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "empresa_nome": { "type": "string" },
+        "logo_base64": { "type": "string" },
+        "cor_primaria": { "type": "string" },
+        "rodape_texto": { "type": "string" }
+      },
+      "required": ["user_id"]
+    }
+  },
+  "firestore": {
+    "/fornecedores/{id}": { "schema": "fornecedor", "description": "Coleção de fornecedores" },
+    "/projetos/{id}": { "schema": "projeto", "description": "Coleção de projetos" },
+    "/unidades/{id}": { "schema": "unidade", "description": "Coleção de unidades" },
+    "/categorias/{id}": { "schema": "categoria", "description": "Coleção de categorias" },
+    "/contratos/{id}": { "schema": "contrato", "description": "Coleção de contratos" },
+    "/configuracoes/{id}": { "schema": "configuracao", "description": "Configurações do usuário" }
+  }
+}
