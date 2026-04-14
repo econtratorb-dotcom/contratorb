@@ -175,13 +175,13 @@ export default function App() {
       {/* Sidebar */}
       <motion.aside 
         animate={{ width: sidebarOpen ? 280 : 80 }}
-        className="bg-white border-r border-slate-100 flex flex-col transition-all duration-300 overflow-hidden"
+        className="bg-emerald-900 border-r border-emerald-800 flex flex-col transition-all duration-300 overflow-hidden"
       >
         <div className="p-6 flex items-center gap-4">
-          <div className="w-10 h-10 bg-emerald-600 rounded-xl flex-shrink-0 flex items-center justify-center text-white font-bold">
+          <div className="w-10 h-10 bg-white rounded-xl flex-shrink-0 flex items-center justify-center text-emerald-900 font-bold">
             {config?.logo_base64 ? <img src={config.logo_base64} className="w-full h-full object-contain rounded-xl" alt="Logo" /> : 'RB'}
           </div>
-          {sidebarOpen && <span className="font-bold text-slate-900 truncate">{config?.empresa_nome || 'GRUPORB'}</span>}
+          {sidebarOpen && <span className="font-bold text-white truncate">{config?.empresa_nome || 'GRUPORB'}</span>}
         </div>
 
         <nav className="flex-1 px-3 space-y-1">
@@ -191,8 +191,8 @@ export default function App() {
               onClick={() => setActiveTab(item.id)}
               className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${
                 activeTab === item.id 
-                  ? 'bg-emerald-50 text-emerald-600 font-semibold' 
-                  : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                  ? 'bg-white/10 text-white font-semibold' 
+                  : 'text-emerald-100/70 hover:bg-white/5 hover:text-white'
               }`}
             >
               <item.icon className="w-5 h-5 flex-shrink-0" />
@@ -201,17 +201,17 @@ export default function App() {
           ))}
         </nav>
 
-        <div className="p-3 border-t border-slate-100 space-y-1">
+        <div className="p-3 border-t border-white/10 space-y-1">
           <button 
             onClick={() => setActiveModule(null)}
-            className="w-full flex items-center gap-3 p-3 text-slate-500 hover:bg-slate-50 rounded-xl transition-all text-sm"
+            className="w-full flex items-center gap-3 p-3 text-emerald-100/70 hover:bg-white/5 hover:text-white rounded-xl transition-all text-sm"
           >
             <ChevronLeft className="w-5 h-5 flex-shrink-0" />
             {sidebarOpen && <span>Voltar ao Portal</span>}
           </button>
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 p-3 text-red-500 hover:bg-red-50 rounded-xl transition-all text-sm"
+            className="w-full flex items-center gap-3 p-3 text-red-400 hover:bg-red-500/10 rounded-xl transition-all text-sm"
           >
             <LogOut className="w-5 h-5 flex-shrink-0" />
             {sidebarOpen && <span>Sair</span>}
